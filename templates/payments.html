@@ -1,0 +1,20 @@
+
+{% extends "base.html" %}
+{% block title %}Payments{% endblock %}
+{% block heading %}Payment Records{% endblock %}
+{% block content %}
+<div class="panel">
+    <h3>Total Collected: ₹{{ "%.2f"|format(total) }}</h3>
+    <table>
+        <tr><th>Rental ID</th><th>Customer</th><th>Amount</th><th>Date</th><th>Note</th></tr>
+        {% for p in items %}
+        <tr>
+            <td>#{{ p.rental_id }}</td><td>{{ p.rental.customer.name }}</td>
+            <td>₹{{ p.amount }}</td><td>{{ p.payment_date }}</td><td>{{ p.note }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5">No payments recorded</td></tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

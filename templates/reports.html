@@ -1,0 +1,22 @@
+
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block heading %}Rental Reports{% endblock %}
+{% block content %}
+<div class="panel">
+    <h3>Total Payments Collected: ₹{{ "%.2f"|format(total) }}</h3>
+    <button onclick="window.print()">Print Report</button>
+    <table>
+        <tr><th>ID</th><th>Customer</th><th>Generator</th><th>Start Date</th><th>End Date</th><th>Status</th></tr>
+        {% for r in items %}
+        <tr>
+            <td>#{{ r.id }}</td><td>{{ r.customer.name }}</td>
+            <td>{{ r.generator.name }}</td><td>{{ r.start_date }}</td>
+            <td>{{ r.end_date or "Active" }}</td><td>{{ r.status }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">No reports available</td></tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

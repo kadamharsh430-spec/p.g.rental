@@ -1,0 +1,32 @@
+
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block heading %}Dashboard{% endblock %}
+{% block content %}
+<div class="stats">
+    <div class="stat"><p>Total Generators</p><h1>{{ total_generators }}</h1></div>
+    <div class="stat"><p>Available</p><h1>{{ available }}</h1></div>
+    <div class="stat"><p>Active Rentals</p><h1>{{ active_rentals }}</h1></div>
+    <div class="stat"><p>Total Customers</p><h1>{{ total_customers }}</h1></div>
+</div>
+<div class="panel">
+    <h3>Total Payments Collected</h3>
+    <h1>₹{{ "%.2f"|format(total_payments) }}</h1>
+</div>
+<div class="panel">
+    <h3>Recent Rentals</h3>
+    <table>
+        <tr><th>ID</th><th>Customer</th><th>Generator</th><th>Status</th></tr>
+        {% for r in rentals %}
+        <tr>
+            <td>#{{ r.id }}</td>
+            <td>{{ r.customer.name }}</td>
+            <td>{{ r.generator.name }}</td>
+            <td>{{ r.status }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4">No rentals yet</td></tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

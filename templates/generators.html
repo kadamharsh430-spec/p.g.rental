@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+{% block title %}Generators{% endblock %}
+{% block heading %}Generator Inventory{% endblock %}
+{% block content %}
+<div class="panel">
+    <h3>Add Generator</h3>
+    <form method="POST" class="form-grid">
+        <input name="name" placeholder="Generator Name" required>
+        <input name="kva" placeholder="KVA (e.g. 25 KVA)">
+        <input name="serial" placeholder="Serial / Model">
+        <input name="notes" placeholder="Notes">
+        <button>Add Generator</button>
+    </form>
+</div>
+<div class="panel">
+    <h3>All Generators</h3>
+    <table>
+        <tr><th>Name</th><th>KVA</th><th>Serial</th><th>Status</th><th>Action</th></tr>
+        {% for g in items %}
+        <tr>
+            <td>{{ g.name }}</td><td>{{ g.kva }}</td>
+            <td>{{ g.serial }}</td><td>{{ g.status }}</td>
+            <td><a href="{{ url_for('delete_generator', id=g.id) }}" onclick="return confirm('Delete generator?')">Delete</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5">No generators added</td></tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

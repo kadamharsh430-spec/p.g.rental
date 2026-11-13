@@ -1,0 +1,44 @@
+
+{% extends "base.html" %}
+{% block title %}Rental Details{% endblock %}
+{% block heading %}Rental #{{ rental.id }}{% endblock %}
+{% block content %}
+<div class="stats">
+    <div class="stat"><p>Rental Days</p><h1>{{ days }}</h1></div>
+    <div class="stat"><p>Total Rent</p><h1>₹{{ "%.2f"|format(total) }}</h1></div>
+    <div class="stat"><p>Paid</p><h1>₹{{ "%.2f"|format(paid) }}</h1></div>
+    <div class="stat"><p>Balance</p><h1>₹{{ "%.2f"|format(balance) }}</h1></div>
+</div>
+<div class="panel">
+    <h3>Rental Information</h3>
+    <p>Customer: {{ rental.customer.name }}</p>
+    <p>Generator: {{ rental.generator.name }}</p>
+    <p>Start Date: {{ rental.start_date }}</p>
+    <p>End Date: {{ rental.end_date or "Still running" }}</p>
+    <p>Status: {{ rental.status }}</p>
+</div>
+{% if rental.status == "Active" %}
+<div class="panel">
+    <h3>Add Payment</h3>
+    <form method="POST" action="{{ url_for('add_payment', id=rental.id) }}" class="form-grid">
+        <input type="number" step="0.01" min="0.01" name="amount" placeholder="Payment Amount" required>
+        <input name="note" placeholder="Payment Note">
+        <button>Save Payment</button>
+    </form>
+    <form method="POST" action="{{ url_for('return_generator', id=rental.id) }}" onsubmit="return confirm('Confirm generator return?')">
+        <button class="danger">Mark Generator Returned</button>
+    </form>
+</div>
+{% endif %}
+<div class="panel">
+    <h3>Payment History</h3>
+    <table>
+        <tr><th>Date</th><th>Amount</th><th>Note</th></tr>
+        {% for p in payments %}
+        <tr><td>{{ p.payment_date }}</td><td>₹{{ p.amount }}</td><td>{{ p.note }}</td></tr>
+        {% else %}
+        <tr><td colspan="3">No payments</td></tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
