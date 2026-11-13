@@ -86,7 +86,7 @@ def login_required(f):
 def login():
     if request.method == "POST":
         username = os.environ.get("ADMIN_USER", "kk")
-        password = os.environ.get("ADMIN_PASSWORD", "jayshreeram")
+        password = os.environ.get("ADMIN_PASSWORD", "harshuu")
 
         if (request.form.get("username") == username and
                 request.form.get("password") == password):
